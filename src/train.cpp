@@ -9,6 +9,7 @@ Train::~Train() {
 
 void Train::clear() {
     if (!first) return;
+
     first->prev->next = nullptr;
     Car* current = first;
     while (current) {
@@ -40,33 +41,34 @@ int Train::getOpCount() {
 
 int Train::getLength() {
     if (!first) return 0;
+
     countOp = 0;
     Car* current = first;
     current->light = true;
-    
+
     int k = 0;
     while (true) {
         current = current->next;
         countOp++;
         k++;
-        
+
         if (current->light) {
             current->light = false;
-            
+
             for (int i = 0; i < k; i++) {
                 current = current->prev;
                 countOp++;
             }
-            
+
             if (!first->light) {
                 return k;
             }
-            
+
             for (int i = 0; i < k; i++) {
                 current = current->next;
                 countOp++;
             }
-            current->light = true; 
+            current->light = true;
         }
     }
 }
